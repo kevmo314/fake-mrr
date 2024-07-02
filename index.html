@@ -107,7 +107,7 @@
       <form id="form">
         <label>
           <div>MRR</div>
-          <input type="text" name="mrr" value="$15032.31" />
+          <input type="number" name="mrr" value="15032.31" />
         </label>
         <label>
           <div>Starting</div>
@@ -416,7 +416,7 @@
         }
 
         function render() {
-          const mrr = document.getElementsByName("mrr")[0].value;
+          const mrr = parseFloat(document.getElementsByName("mrr")[0].value);
           const start = document.getElementsByName("start")[0].value;
           const canvas = document.getElementById("chart");
 
@@ -424,8 +424,8 @@
           const stdev = parseFloat(document.getElementById("var").value);
 
           // set value
-          document.getElementById("value").textContent = mrr;
-          document.getElementById("y-axis").textContent = mrr;
+          document.getElementById("value").textContent =
+            "$" + mrr.toLocaleString("en-US", { maximumFractionDigits: 2 });
 
           // set from
           document.querySelector(".from").textContent = formatDate(
@@ -486,6 +486,11 @@
             ctx.lineTo(x, y);
           }
           ctx.stroke();
+          const last = points.length > 0 ? points[points.length - 1] : 1;
+          document.getElementById("y-axis").textContent = `$${(
+            (1 / last) *
+            mrr
+          ).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
         }
 
         render();
