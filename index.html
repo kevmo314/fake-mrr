@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stripe MRR Chart Generator</title>
     <style>
       #gradient-canvas {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -25,7 +26,7 @@
       header {
         color: white;
         text-align: center;
-        margin: 128px;
+        margin: 128px 16px;
       }
 
       h1 {
@@ -45,6 +46,17 @@
         display: flex;
         justify-content: center;
         gap: 32px;
+      }
+
+      @media (max-width: 768px) {
+        main {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #svg {
+          transform: scale(0.8);
+        }
       }
 
       main > * {
@@ -354,6 +366,15 @@
         document
           .getElementsByClassName("screenshot")[0]
           .addEventListener("click", function () {
+            // if it's mobile show an alert saying how to take a screenshot
+            if (
+              navigator.userAgent.match(
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+              )
+            ) {
+              alert("This joke doesn't really work that well on mobile. :(");
+              return;
+            }
             let hotkey = "Alt + PrtScn";
             if (navigator.platform.includes("Mac")) {
               hotkey = "⌘ + Shift + 4";
