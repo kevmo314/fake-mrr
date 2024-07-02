@@ -123,9 +123,7 @@
             step="0.001"
           />
         </label>
-        <div class="screenshot">
-          Take a screenshot with <span class="hotkey"></span>!
-        </div>
+        <button class="screenshot">Save as PNG for just $19.99/mo!</button>
       </form>
       <svg xmlns="http://www.w3.org/2000/svg" width="398" height="336" id="svg">
         <style>
@@ -353,6 +351,24 @@
         document.getElementById("gr").addEventListener("input", render);
         document.getElementById("var").addEventListener("input", render);
 
+        document
+          .getElementsByClassName("screenshot")[0]
+          .addEventListener("click", function () {
+            let hotkey = "Alt + PrtScn";
+            if (navigator.platform.includes("Mac")) {
+              hotkey = "⌘ + Shift + 4";
+            } else if (navigator.platform.includes("Win")) {
+              hotkey = "Win + Shift + S";
+            } else {
+              hotkey = "Alt + PrtScn";
+            }
+            alert(
+              "Just kidding. Take a screenshot with " +
+                hotkey +
+                ", on the house."
+            );
+          });
+
         // set max
         document.getElementsByName("start")[0].max = new Date(
           Date.now() - 30 * 86400 * 1000
@@ -361,13 +377,6 @@
           .split("T")[0];
 
         // hotkey
-        if (navigator.platform.includes("Mac")) {
-          document.querySelector(".hotkey").textContent = "⌘ + Shift + 4";
-        } else if (navigator.platform.includes("Win")) {
-          document.querySelector(".hotkey").textContent = "Win + Shift + S";
-        } else {
-          document.querySelector(".hotkey").textContent = "Alt + PrtScn";
-        }
 
         function formatDate(date) {
           date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
